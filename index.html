@@ -6,12 +6,10 @@
 
 <title>For Her ❤️</title>
 
-<!-- Preconnect fonts for better performance -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap');
+
 *{
     margin:0;
     padding:0;
@@ -29,10 +27,6 @@ body{
     overflow-x:hidden;
 }
 
-:focus{
-    outline:3px solid rgba(212,175,55,.8);
-    outline-offset:3px;
-}
 
 /* =====================================================
    LETTER INTRO
@@ -1141,16 +1135,15 @@ section{
 
 }
 
-/* Respect prefers-reduced-motion */
-@media (prefers-reduced-motion: reduce) {
-  .envelope, .cake, .flame, .firework { animation: none !important; }
-}
-
 </style>
 </head>
 
 
 <body>
+
+<audio id="birthdayMusic" loop preload="auto">
+    <source src="birthday-tune.mp3" type="audio/mpeg">
+</audio>
 
 
 <!-- =====================================================
@@ -1161,11 +1154,11 @@ section{
 
     <div class="letter-wrapper">
 
-        <div class="envelope" id="envelope" tabindex="0" role="button" aria-label="Open the letter">
+        <div class="envelope" id="envelope">
 
             <div class="paper"></div>
 
-            <div class="seal" aria-hidden="true">
+            <div class="seal">
                 ❤️
             </div>
 
@@ -1190,7 +1183,7 @@ section{
      PERSONAL LETTER
 ===================================================== -->
 
-<div class="personal-letter" id="personalLetter" role="dialog" aria-modal="true" aria-labelledby="letterTitle" aria-hidden="true">
+<div class="personal-letter" id="personalLetter">
 
     <div class="letter-content">
 
@@ -1198,7 +1191,7 @@ section{
             A LETTER FOR YOU
         </div>
 
-        <h2 id="letterTitle">
+        <h2>
             To You ❤️
         </h2>
 
@@ -1249,7 +1242,7 @@ section{
 
         <button
             class="continue-btn"
-            id="continueBtn">
+            onclick="startBirthday()">
 
             CONTINUE ✨
 
@@ -1267,9 +1260,9 @@ section{
 
 <header class="hero">
 
-    <div class="firework f1" aria-hidden="true"></div>
-    <div class="firework f2" aria-hidden="true"></div>
-    <div class="firework f3" aria-hidden="true"></div>
+    <div class="firework f1"></div>
+    <div class="firework f2"></div>
+    <div class="firework f3"></div>
 
 
     <div class="hero-content">
@@ -1287,8 +1280,8 @@ section{
 
         <!-- CHANGE HER NAME -->
 
-        <div class="hero-name" id="heroName">
-            Jiya Parveen ❤️
+        <div class="hero-name">
+            Jiya Parveen❤️
         </div>
 
 
@@ -1315,7 +1308,7 @@ section{
 
                 <div class="candle">
 
-                    <div class="flame" aria-hidden="true"></div>
+                    <div class="flame"></div>
 
                 </div>
 
@@ -1355,8 +1348,7 @@ section{
 
             <img
                 src="photo3.png"
-                alt="Photo of us at the beginning of our relationship"
-                loading="lazy">
+                alt="our memory">
 
             <div class="memory-overlay">
 
@@ -1380,8 +1372,7 @@ section{
 
             <img
                 src="photo2.png"
-                alt="Beautiful moments together"
-                loading="lazy">
+                alt="Our Memory">
 
             <div class="memory-overlay">
 
@@ -1405,8 +1396,7 @@ section{
 
             <img
                 src="photo1.jpeg"
-                alt="Forever memory"
-                loading="lazy">
+                alt="Our Memory">
 
             <div class="memory-overlay">
 
@@ -1470,74 +1460,36 @@ section{
 </section>
 
 
+
 <script>
 
 
 /* =====================================================
-   Helpers & feature-detection
-===================================================== */
-const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-function isLowEndDevice(){
-    // Use deviceMemory where available (GBs) and viewport width to guess
-    const mem = navigator.deviceMemory || 4; // assume 4GB if unknown
-    const smallScreen = window.innerWidth < 700;
-    return mem <= 2 || smallScreen;
-}
-
-/* =====================================================
-   LETTER OPENING (keyboard accessible)
+   LETTER OPENING
 ===================================================== */
 
-const envelope = document.getElementById("envelope");
-const personalLetter = document.getElementById("personalLetter");
-const letterScreen = document.getElementById("letterScreen");
-const continueBtn = document.getElementById('continueBtn');
+const envelope =
+    document.getElementById("envelope");
 
-function openLetter(){
+const personalLetter =
+    document.getElementById("personalLetter");
+
+const letterScreen =
+    document.getElementById("letterScreen");
+
+
+envelope.addEventListener("click", function(){
+
     envelope.classList.add("open");
-    // make dialog accessible
+
     setTimeout(()=>{
+
         personalLetter.classList.add("show");
-        personalLetter.setAttribute('aria-hidden','false');
-        // move focus to Continue button inside dialog
-        continueBtn.focus();
+
     },800);
-}
 
-function closePersonalLetter(){
-    personalLetter.classList.remove('show');
-    personalLetter.setAttribute('aria-hidden','true');
-    envelope.focus();
-}
-
-// click
-envelope.addEventListener("click", openLetter);
-
-// keyboard: Enter or Space to open
-envelope.addEventListener('keydown', (e)=>{
-    if(e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar'){
-        e.preventDefault();
-        openLetter();
-    }
 });
 
-// allow Esc to close dialog
-window.addEventListener('keydown', (e)=>{
-    if(e.key === 'Escape'){
-        if(personalLetter.classList.contains('show')){
-            closePersonalLetter();
-        }
-    }
-});
-
-continueBtn.addEventListener('click', startBirthday);
-continueBtn.addEventListener('keydown', (e)=>{
-    if(e.key === 'Enter' || e.key === ' '){
-        e.preventDefault();
-        startBirthday();
-    }
-});
 
 
 /* =====================================================
@@ -1545,90 +1497,133 @@ continueBtn.addEventListener('keydown', (e)=>{
 ===================================================== */
 
 function startBirthday(){
+
+    // Start the peaceful birthday music only after the user presses CONTINUE.
+    const music = document.getElementById("birthdayMusic");
+    music.volume = 0.35;
+    music.play().catch(error => {
+        console.log("Music could not start:", error);
+    });
+
     personalLetter.classList.remove("show");
-    personalLetter.setAttribute('aria-hidden','true');
 
     setTimeout(()=>{
+
         letterScreen.classList.add("hide");
-        // create a modest amount depending on device
-        const base = isLowEndDevice() ? 40 : 150;
-        createConfetti(base);
+
+        createConfetti(250);
+
     },800);
+
 }
 
 
+
 /* =====================================================
-   CONFETTI (performance-conscious)
+   CONFETTI
 ===================================================== */
 
 function createConfetti(amount){
-    if(prefersReduced) return; // respect reduction preference
-
-    // Cap amount to avoid overload
-    const maxAmount = Math.min(400, Math.max(40, amount));
-
-    // further reduce for low-end devices
-    const effective = isLowEndDevice() ? Math.round(maxAmount * 0.35) : Math.round(maxAmount);
 
     const colors=[
+
         "#d4af37",
         "#ffffff",
         "#ff4d6d",
         "#c084fc",
         "#7dd3fc"
+
     ];
 
-    for(let i=0;i<effective;i++){
-        const piece = document.createElement("div");
-        piece.className = "confetti";
-        piece.style.left = Math.random()*100+"vw";
-        piece.style.background = colors[Math.floor(Math.random()*colors.length)];
-        piece.style.animationDuration = (Math.random()*3+3)+"s";
-        piece.style.animationDelay = Math.random()*1.5+"s";
-        piece.style.width = (Math.random()*7+4)+"px";
-        piece.style.height = (Math.random()*12+6)+"px";
-        // smaller z-index for better compositing on low-end
-        piece.style.zIndex = isLowEndDevice() ? 50 : 999;
+
+    for(let i=0;i<amount;i++){
+
+        const piece =
+            document.createElement("div");
+
+
+        piece.className =
+            "confetti";
+
+
+        piece.style.left =
+            Math.random()*100+"vw";
+
+
+        piece.style.background =
+            colors[
+                Math.floor(
+                    Math.random()*colors.length
+                )
+            ];
+
+
+        piece.style.animationDuration =
+            (Math.random()*3+3)+"s";
+
+
+        piece.style.animationDelay =
+            Math.random()*1.5+"s";
+
+
+        piece.style.width =
+            (Math.random()*7+4)+"px";
+
+
+        piece.style.height =
+            (Math.random()*12+6)+"px";
+
+
         document.body.appendChild(piece);
 
-        // remove after animation completes
-        setTimeout(()=>{ piece.remove(); },8000);
+
+        setTimeout(()=>{
+
+            piece.remove();
+
+        },7000);
+
     }
+
 }
 
 
-// Continuous subtle celebration — less frequent to save CPU
+/* Continuous subtle celebration */
+
 setInterval(()=>{
-    if(letterScreen.classList.contains("hide") && !prefersReduced){
-        createConfetti(isLowEndDevice() ? 20 : 30);
+
+    if(letterScreen.classList.contains("hide")){
+
+        createConfetti(30);
+
     }
-},10000);
+
+},7000);
+
 
 
 /* =====================================================
-   HERO PARALLAX (lightweight)
+   HERO PARALLAX
 ===================================================== */
 
 window.addEventListener("scroll",()=>{
-    const hero = document.querySelector(".hero-content");
-    const scroll = window.scrollY;
-    if(scroll < window.innerHeight && !prefersReduced){
-        hero.style.transform = `translateY(${scroll*.16}px)`;
+
+    const hero =
+        document.querySelector(".hero-content");
+
+    const scroll =
+        window.scrollY;
+
+
+    if(scroll <
+       window.innerHeight){
+
+        hero.style.transform =
+            `translateY(${scroll*.2}px)`;
+
     }
+
 });
-
-
-// Optional: small helper to change the name quickly via URL param e.g. ?name=Anna
-(function personalize(){
-    try{
-        const params = new URLSearchParams(location.search);
-        const n = params.get('name');
-        if(n){
-            document.getElementById('heroName').textContent = n + ' ❤️';
-            document.title = n + "'s Birthday";
-        }
-    }catch(e){/* ignore */}
-})();
 
 </script>
 
